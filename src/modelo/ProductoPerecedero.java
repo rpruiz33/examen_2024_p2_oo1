@@ -23,6 +23,16 @@ public ProductoPerecedero(int idProducto, int codigo, String nombre, float preci
 	this.fechaVencimiento = fechaVencimiento;
 	this.requiereRefrigeracion = requiereRefrigeracion;
 }
+@Override
+public boolean esNecesarioReabastecer() {
+	return this.getFechaVencimiento().isBefore(LocalDate.now().plusDays(20));
+}
+@Override
+public String toString() {
+	return "\nProductoPerecedero [fechaVencimiento=" + fechaVencimiento + ", requiereRefrigeracion="
+			+ requiereRefrigeracion + ", idProducto=" + idProducto + ", codigo=" + codigo + ", Nombre=" + Nombre
+			+ ", Precio=" + Precio + ", categoria=" + categoria + ", CantidadDisponible=" + CantidadDisponible + "]";
+}
 
 
 

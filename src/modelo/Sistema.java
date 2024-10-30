@@ -72,15 +72,16 @@ public Producto traerCodigo(int codigo) {
 	return p;
 }
 
-public boolean AgregarProductoNoPrecedero(int idProducto, int codigo, String nombre, float precio, Categoria categoria,
-		int cantidadDisponible, LocalDate fechaVencimiento, boolean requiereRefrigeracio)throws Exception {
+
+public boolean AgregarProductoPrecedero (int codigo, String nombre, float precio, Categoria categoria,
+int cantidadDisponible, LocalDate fechaVencimiento, boolean requiereRefrigeracion)throws Exception {
 	
 
 	boolean flag=false;
 
 	Producto pa=traerCodigo(codigo);
 	if(pa!=null) {
-		flag=false;
+		throw new Exception("mismo codigo");
 	}
 	else {
 		flag=true;
@@ -88,10 +89,78 @@ public boolean AgregarProductoNoPrecedero(int idProducto, int codigo, String nom
 		if(lstProductos.size()>0) {
 			id=lstProductos.get(lstProductos.size()-1).getIdProducto()+1;
 		}
-		lstProductos.add(new ProductoPerecedero(id ,codigo,nombre,  precio,  categoria,
-				 cantidadDisponible,  fechaVencimiento,  requiereRefrigeracio));
+		lstProductos.add(new ProductoPerecedero(id,codigo,  nombre,  precio,  categoria,
+				 cantidadDisponible, fechaVencimiento, requiereRefrigeracion));
 	}
 
 return flag;
+}
+public boolean AgregarProductoNoPrecedero(  int codigo, String nombre, float precio, Categoria categoria,
+int cantidadDisponible, int mesesGarantia, int cantidadMinima)throws Exception {
+	
+
+	boolean flag=false;
+
+	Producto pa=traerCodigo(codigo);
+	if(pa!=null) {
+		throw new Exception("mismo codigo");
+	}
+	else {
+		flag=true;
+		int id=1;
+		if(lstProductos.size()>0) {
+			id=lstProductos.get(lstProductos.size()-1).getIdProducto()+1;
+		}
+		lstProductos.add(new ProductoNoPerecedero(id, codigo,  nombre, precio, categoria,
+				cantidadDisponible,  mesesGarantia, cantidadMinima));
+	}
+
+return flag;
+}
+public boolean agregarMovimientoInventario(Producto producto , LocalDate fecha, int cantidad)throws Exception {
+	if(producto.getCantidadDisponible()+cantidad<0) {
+		throw new Exception("la cantidad es menor");
+	}
+	int cant=producto.getCantidadDisponible()-cantidad;
+	int id=1;
+	if(lstMovientos.size()>0) {
+		id=lstMovientos.get(lstMovientos.size()-1).getMovimientoInventario()+1;
+	}
+	
+	
+	return lstMovientos.add(new MovimientoInventario(id,producto ,  fecha,  cant));
+}
+public List<MovimientoInventario> traerVentas(LocalDate fechaDesde,LocalDate fechaHasta) {
+	List<MovimientoInventario> aux = new ArrayList<MovimientoInventario>();
+	for (int i=0;i<aux.size();i++) {
+		if(lstMovientos.get(i).getFecha().isEqual(fechaHasta)||lstMovientos.get(i).getFecha().isEqual(fechaDesde)||lstMovientos.get(i).getFecha().isBefore(fechaHasta)
+				&&lstMovientos.get(i).getFecha().isAfter(fechaHasta)) {
+			aux.add(lstMovientos.get(i));
+			
+		}
+	}
+	return aux;
+}
+
+public List<MovimientoInventario> traerVentasDeproductosRefrigerados(LocalDate fecha) {
+	List<MovimientoInventario> aux = new ArrayList<MovimientoInventario>();
+	for (int i=0;i<lstMovientos.size();i++) {
+		if(lstMovientos.get(i).getFecha().isEqual(fecha)) {
+			aux.add(lstMovientos.get(i));
+			
+		}
+	}
+	return aux;
+}
+
+public List <Producto> traerProductosAReabastecer(Categoria categoria) {
+	List<Producto> aux = new ArrayList<Producto>();
+	for (int i=0;i<lstProductos.size();i++) {
+		if(lstProductos.get(i).getCategoria().equals(categoria)) {
+			aux.add(lstProductos.get(i));
+			
+		}
+	}
+	return aux;
 }
 }

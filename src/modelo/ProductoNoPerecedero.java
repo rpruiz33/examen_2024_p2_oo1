@@ -22,6 +22,18 @@ public ProductoNoPerecedero(int idProducto, int codigo, String nombre, float pre
 	this.mesesGarantia = mesesGarantia;
 	CantidadMinima = cantidadMinima;
 }
+@Override
+public boolean esNecesarioReabastecer() {
+	return this.getCantidadMinima()>this.getCantidadDisponible();
+}
+@Override
+public String toString() {
+	return "\nProductoNoPerecedero [mesesGarantia=" + mesesGarantia + ", CantidadMinima=" + CantidadMinima
+			+ ", idProducto=" + idProducto + ", codigo=" + codigo + ", Nombre=" + Nombre + ", Precio=" + Precio
+			+ ", categoria=" + categoria + ", CantidadDisponible=" + CantidadDisponible + "]";
+}
+
+
 
 
 

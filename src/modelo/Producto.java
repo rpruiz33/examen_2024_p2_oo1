@@ -56,6 +56,6 @@ public Producto(int idProducto, int codigo, String nombre, float precio, Categor
 	CantidadDisponible = cantidadDisponible;
 }
 
-
+public abstract  boolean esNecesarioReabastecer();
 
 }

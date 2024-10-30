@@ -3,15 +3,15 @@ package modelo;
 import java.time.LocalDate;
 
 public class MovimientoInventario {
-private int movimientoInventario;
+private int idmovimientoInventario;
 private Producto producto;
 private LocalDate fecha;
 private int cantidad;
 public int getMovimientoInventario() {
-	return movimientoInventario;
+	return idmovimientoInventario;
 }
-public void setMovimientoInventario(int movimientoInventario) {
-	this.movimientoInventario = movimientoInventario;
+public void setMovimientoInventario(int idmovimientoInventario) {
+	this.idmovimientoInventario = idmovimientoInventario;
 }
 public Producto getProducto() {
 	return producto;
@@ -31,12 +31,19 @@ public int getCantidad() {
 public void setCantidad(int cantidad) {
 	this.cantidad = cantidad;
 }
-public MovimientoInventario(int movimientoInventario, Producto producto, LocalDate fecha, int cantidad) {
+public MovimientoInventario(int idmovimientoInventario, Producto producto, LocalDate fecha, int cantidad) {
 	super();
-	this.movimientoInventario = movimientoInventario;
+	this.idmovimientoInventario = idmovimientoInventario;
 	this.producto = producto;
 	this.fecha = fecha;
 	this.cantidad = cantidad;
+}
+@Override
+public String toString() {
+	return "\nMovimientoInventario [idmovimientoInventario=" + idmovimientoInventario + ", producto=" + producto
+			+ ", fecha=" + fecha + ", cantidad=" + cantidad + ", getMovimientoInventario()=" + getMovimientoInventario()
+			+ ", getProducto()=" + getProducto() + ", getFecha()=" + getFecha() + ", getCantidad()=" + getCantidad()
+			+ "]";
 }
 
 
